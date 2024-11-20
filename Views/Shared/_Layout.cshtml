@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | @ViewBag.Title </title>
+    @Html.Partial("_LinkHtml")
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        @Html.Partial("_Header") <!-- Inclus Header.cshtml -->
+        @Html.Partial("_Menu")   <!-- Inclus Menu.cshtml -->
+
+         <div class="content-wrapper">
+            @RenderBody() <!-- Le contenu spécifique à chaque page sera injecté ici -->
+        </div>
+        @Html.Partial("_Footer") <!-- Inclus Footer.cshtml -->
+        @Html.Partial("_LinkJs")
+    </div>
+</body>
+</html>

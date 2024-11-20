@@ -1,0 +1,207 @@
+﻿@{
+    ViewBag.Title = "Flowers";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Indique d'utiliser le layout
+}
+<section class="content-header">
+    <h1>
+        Livraison
+        <small> Insertion multiple</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- INSERTION MERE -->
+    <div class="box" style="width: 50%; margin-left: auto; margin-right: auto">
+        <div class="box box-header with-border">
+            <h3 class="box-title">Insertion LIVRAISON</h3>
+        </div>
+        <form action="@Url.Action("CreateMultipleLivraison", "Livraison")" method="POST">
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <!-- Remarque -->
+                    <tr>
+                        <td>
+                            <label for="exampleInputEmail1">
+                                Remarque
+                            </label>
+                        </td>
+                        <td>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="exampleInputEmail1"
+                                name="id"
+                            >
+                        </td>
+                    </tr>
+
+                    <!-- Bon de Commande -->
+                    <tr>
+                        <td>
+                            <label for="exampleInputEmail1">
+                               Bon de Commande
+                            </label>
+                        </td>
+                        <td>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="exampleInputEmail1"
+                                value="BC2"
+                                name="idbc"
+                                readonly
+                            >
+                        </td>
+                    </tr>
+
+                    <!-- Date -->
+                    <tr>
+                        <td>
+                            <label for="exampleInputEmail1">
+                                Date
+                            </label>
+                        </td>
+                        <td>
+                            <input 
+                                type="date" 
+                                class="form-control" 
+                                id="exampleInputEmail1" 
+                                name="date"
+                            >
+                        </td>
+                    </tr>
+
+                    <!-- Magasin -->
+                    <tr>
+
+                        <td>
+                            <label for="select_">Magasin</label>
+                        </td>
+                        <td>
+                            @Html.DropDownList(
+                                     "idmagasin",
+                                     ViewBag.Magasins as SelectList,
+                                     new { @class = "form-control" }
+                                     )
+                        </td>
+
+                    </tr>
+
+                    <!-- Autocomplete fournisseur -->
+                    <tr>
+                        <td>
+                            <label for="exampleInputEmail1">
+                                Fournisseur
+                            </label>
+                        </td>
+                        <td>
+                            <input 
+                                type="text"
+                                class="form-control"
+                                id="fournisseurInput"
+                                autocomplete="off"
+                                oninput="setupAutocomplete('#fournisseurInput','#fournisseurId' ,'#suggestions' ,'/Fournisseur/AutocompleteFournisseur')" 
+                            />
+                            <input type="hidden"
+                                   id="fournisseurId"
+                                   name="idfrn" />
+                            <ul id="suggestions"
+                                class="list-group"
+                                style="position: absolute; z-index: 1000; width: 50%"></ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-right">
+                <button type="reset" class="btn btn-default">Reinitialiser</button>
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+            </div>
+
+    </div>
+
+    <!-- INSERTION FILLE -->
+    <div 
+        class="box" 
+        style="width: 75%; margin-left: auto; margin-right: auto; margin-top: 1%"
+    >
+      
+            <div class="box-body">
+                <table class="table table-bordered text-center">
+                    <!-- Titre -->
+                    <tr class="text-center">
+                        <th> </th>
+                        <th>Quantité</th>
+                        <th>Produit</th>
+                        <th>Unité</th>
+                        <th></th>
+                    </tr>
+
+                    <!-- Detail -->
+                    @for (int i = 0; i < ViewBag.NbrLigne; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input 
+                                    type="checkbox"
+                                    name="check_@i"
+                                >
+                            </td>
+                            <td>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    placeholder="0.0"
+                                    name="qty_@i"
+                                >
+                            </td>
+                            <td>
+                                <input type="text"
+                                       class="form-control"
+                                       id="productInput_@i"
+                                       autocomplete="off"
+                                       oninput="setupAutocompleteProduit('#productInput_@i','#idproduit_@i' ,'#suggestions_@i','#unite_@i' ,'/Produit/AutocompleteProduit')" />
+                                <input type="hidden"
+                                       id="idproduit_@i"
+                                       name="idproduit_@i" />
+                                <ul id="suggestions_@i"
+                                    class="list-group text-left"
+                                    style="position: absolute; z-index: 1000; width: 25%"></ul>
+                            </td>
+                            <td>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="unite_@i" 
+                                    readonly
+                                >
+                            </td>
+                            <td>
+                                <button class="btn btn-link text-danger">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <input type="hidden" name="nbr_ligne" value="@ViewBag.NbrLigne" />
+                <div class="box-footer text-right" style="margin-top: 1%">
+                    <button class="btn btn-default">Ajouter dix lignes</button>
+                    <button class="btn btn-default">Ajouter une ligne</button>
+                    <button type="reset" class="btn btn-default">Reinitialiser</button>
+                    <button class="btn btn-success">Enregistrer</button>     
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+<script src="~/js/my/livraison.js"></script>
+<script src="~/js/my/produit.js"></script>
