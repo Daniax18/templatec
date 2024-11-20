@@ -1,0 +1,94 @@
+﻿@using Template.Models.invoice
+
+@{
+    ViewBag.Title = "Flowers";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Indique d'utiliser le layout
+
+    var facture = ViewBag.Facture as VFactureComplet;
+    var filles = ViewBag.Filles as List<VDetailFactureComplet>;
+}
+<section class="content-header">
+    <h1>
+        Facture
+        <small> Fiche Facture </small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- FICHE MERE -->
+    <div class="box" style="width: 50%; margin-left: auto; margin-right: auto">
+        <div class="box-body">
+            <table class="table table-bordered">
+                <!-- ID -->
+                <tr>
+                    <td>Id</td>
+                    <td>@facture.Id</td>
+                </tr>
+
+                <!-- Date -->
+                <tr>
+                    <td>Date</td>
+                    <td>@facture.DateF</td>
+                </tr>
+
+                <!-- Client -->
+                <tr>
+                    <td>Client</td>
+                    <td>@facture.CNom</td>
+                </tr>
+
+
+                <!-- Magasin -->
+                <tr>
+                    <td>Magasin</td>
+                    <td>@facture.MNom</td>
+                </tr>
+
+                <!-- Total -->
+                <tr>
+                    <td>TotalFacture</td>
+                    <td>Ar @facture.TotalFacture</td>
+                </tr>
+              
+            </table>
+        </div>
+    </div>
+
+    <!-- FICHE FILLE -->
+    <div class="box"
+         style="width: 75%; margin-left: auto; margin-right: auto; margin-top: 1%">
+
+        <div class="box-body ">
+            <table class="table table-bordered">
+
+                <tr class="text-center text-bold success">
+                    <td>Produit</td>
+                    <td>Unite</td>
+                    <td>Prix unitaire</td>
+                    <td>Qte</td>
+                    <td>Total</td>
+                </tr>
+
+                @if (filles != null)
+                {
+                    foreach (var l in filles)
+                    {
+                        <tr>
+                            <td>@l.Nom</td>
+                            <td>@l.UniteNom</td>
+                            <td>@l.PuProduit</td>
+                            <td>@l.Qte</td>
+                            <td>Ar @l.TotalVente</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</section>

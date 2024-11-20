@@ -1,0 +1,26 @@
+﻿dotnet ef dbcontext scaffold "<connection string>" Microsoft.EntityFrameworkCore.SqlServer -o Models
+
+Scaffold-DbContext <connection string>" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models 
+
+En spécifiant de table: 
+dotnet ef dbcontext scaffold "<connection string>" Microsoft.EntityFrameworkCore.SqlServer -o Models --table NomDeLaTable1 --table NomDeLaTable2
+
+Nouvel Scaffolding en utilisant un dbContext déjà créé
+
+dotnet ef dbcontext scaffold "<connection string" Microsoft.EntityFrameworkCore.SqlServer -o Models --table NouvelleTable1 --table NouvelleTable2 --context <My_Context> --no-onconfiguring
+
+<connection string>
+Data Source=NAUTILIUS\SQLEXPRESS;Initial Catalog=store;Integrated Security=True;Trust Server Certificate=True
+
+Scaffold-DbContext "Data Source=NAUTILIUS\SQLEXPRESS;Initial Catalog=store;Integrated Security=True;Trust Server Certificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables utilisateur,v_utilisateur_role,v_utilisateur_magasin_lib
+
+
+Scaffold-DbContext "Data Source=NAUTILIUS\SQLEXPRESS;Initial Catalog=store;Integrated Security=True;Trust Server Certificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Tables historique,historique_valeur -Context TempContext -NoOnConfiguring -Force
+
+
+
+Modification
+
+Scaffold-DbContext "Data Source=NAUTILIUS\SQLEXPRESS;Initial Catalog=store;Integrated Security=True;Trust Server Certificate=True" Microsoft.EntityFrameworkCore.SqlServer -Tables livraison -Context TempContext -Force
+
+

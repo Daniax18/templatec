@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Template.Models.analyse;
 using Template.Models.apj.histo;
 using Template.Models.apj.user;
 using Template.Models.invoice;
@@ -54,6 +55,10 @@ public partial class StoreContext : DbContext
     public virtual DbSet<VDetailFactureComplet> VDetailFactureComplets { get; set; }
 
     public virtual DbSet<VFactureComplet> VFactureComplets { get; set; }
+
+    public virtual DbSet<VAnalyseCaMagasin> VAnalyseCaMagasins { get; set; }
+
+    public virtual DbSet<VAnalyseCategorie> VAnalyseCategories { get; set; }
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -678,6 +683,35 @@ public partial class StoreContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("total_facture");
         });
+
+        modelBuilder.Entity<VAnalyseCaMagasin>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("v_analyse_ca_magasin");
+
+            entity.Property(e => e.Nom)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("nom");
+            entity.Property(e => e.Total)
+                .HasColumnType("decimal(38, 2)")
+                .HasColumnName("total");
+        });
+
+        modelBuilder.Entity<VAnalyseCategorie>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("v_analyse_categorie");
+
+            entity.Property(e => e.Nom)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("nom");
+            entity.Property(e => e.Total).HasColumnName("total");
+        });
+
 
         OnModelCreatingPartial(modelBuilder);
     }

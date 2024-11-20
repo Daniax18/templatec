@@ -44,3 +44,26 @@ select
 	vp.unite_nom
 from detailfacture as d
 join v_produit_complet vp on vp.id = d.idproduit;
+
+
+-- -----------------------------------------------------------------
+-- STATISTIQUE
+-- -----------------------------------------------------------------
+CREATE VIEW v_analyse_categorie
+AS
+select
+	c.nom,
+	sum(d.qte) as total
+from detailfacture d
+join produit p on p.id = d.idproduit
+join categorie c on c.id = p.idcategorie
+group by c.nom;
+
+CREATE VIEW v_analyse_ca_magasin
+AS
+select
+	m.nom,
+	sum(f.total_facture) as total
+from facture f
+join magasin m on m.id = f.idmagasin
+group by m.nom;

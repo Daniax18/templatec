@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿#pragma warning disable 
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Template.Models;
 using Template.Models.invoice;
@@ -15,7 +17,26 @@ namespace Template.Controllers
             _storeContext = storeContext;
         }
 
+        public IActionResult DetailFacture(string id)
+        {
+            var facture = _storeContext.VFactureComplets
+                .FirstOrDefault(f => f.Id == id);
 
+            List<VDetailFactureComplet> filles = null;
+
+            if (facture != null)
+            {
+                filles = _storeContext.VDetailFactureComplets
+                    .Where(filles => filles.Idfacture == facture.Id)
+                    .ToList();
+            }
+            ViewBag.Facture = facture;
+            ViewBag.Filles = filles;
+
+            return View("FicheFacture");
+        }
+
+        // EXPORT PDF - EXCEL - CSV
         [HttpPost]
         public ActionResult Exporter(string format)
         {
@@ -65,10 +86,12 @@ namespace Template.Controllers
             string idclient = Request.Form["idclient"];
             int nbrLigne = int.Parse(Request.Form["nbr_ligne"]);
             string remarque = Request.Form["remarque"];
+            Random random = new Random();
+            int randomNumber = random.Next(1, 1000);
 
             var facture = new Facture
             {
-                Id = "F1",
+                Id = $"F{randomNumber}",
                 DateF = DateOnly.Parse(date),
                 Idmagasin = idmagasin,
                 Idclient = idclient,
