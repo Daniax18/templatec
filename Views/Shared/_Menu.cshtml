@@ -74,14 +74,22 @@
 
             <!-- GRAPHE -->
             <li class="treeview">
-                <a href="@Url.Action("Graph", "Home")">
-                    <i class="fa fa-pie-chart"></i>
-                    <span>Graphes</span>
+                <a href="#">
+                    <i class="fa fa-pie-chart"></i> <span>Analyse</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="@Url.Action("AnalyseMagasin", "Analyse")">
+                            <i class="fa fa-circle-o"></i> Magasin
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("AnalyseCategorie", "Analyse")">
+                            <i class="fa fa-circle-o"></i> Categorie
+                        </a>
+                    </li>
+                </ul>
             </li>
-            
-
-           
         </ul>
     </section>
     <!-- /.sidebar -->

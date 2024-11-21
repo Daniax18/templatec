@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}@{
+    ViewBag.Title = "Flowers";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Indique d'utiliser le layout
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Analyse
+        <small>Chiffre d'affaire</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Analyse de vente</a></li>
+        <li><a href="#">Analyse CA</a></li>
+    </ol>
+</section>
+
+<!-- IMPUT DE RECHERCHE -->
+<section class="content">
+    <div class="box collapsed-box" style="width:80%; margin-left: auto;margin-right:auto">
+
+        <div class="box-header with-border ">
+            <h3 class="box-title">Analyse de vente</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="box-body ">
+            <form action="@Url.Action("Exporter", "Facture")" method="post">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date Min</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date Max</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Magasin</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <button type="submit" class="btn btn-info">
+                                Recherher
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+    <!-- PIE CHART -->
+    <div class="box box-danger" style="width: 80%; margin-left: auto;margin-right:auto" >
+        <div class="box-header with-border">
+            <h3 class="box-title">Chiffre d'affaire par magasin</h3>
+
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <canvas id="pieChart" style="height:250px"></canvas>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</section>
+
+<!-- /.content -->
+<script src="~/js/chart/Pie.js"></script>
+
+<script>
+    pieChart('/Analyse/DataAnalyseMagasin')
+</script>
