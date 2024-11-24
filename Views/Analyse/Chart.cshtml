@@ -11,7 +11,7 @@
 <section class="content-header">
     <h1>
         Analyse
-        <small>Chiffre d'affaire</small>
+        <small>Chiffre d'affaire par categorie</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Analyse de vente</a></li>
@@ -34,25 +34,42 @@
         </div>
 
         <div class="box-body ">
-            <form action="@Url.Action("Exporter", "Facture")" method="post">
+            <form action="@Url.Action("AnalyseMagasin", "Analyse")" method="GET">
                 <table class="table table-bordered">
                     <tr>
                         <td>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Date Min</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="exampleInputEmail1"
+                                    name="date1"
+                                    value="@ViewBag.Date1"
+                                >
                             </div>
                         </td>
                         <td>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Date Max</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1">
+                                <input 
+                                    type="text" 
+                                    class="form-control"
+                                    id="date1"
+                                    name="date2"
+                                       value="@ViewBag.Date2">
                             </div>
                         </td>
                         <td>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Magasin</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1">
+                                <input 
+                                    type="text" 
+                                    class="form-control"
+                                    id="magasin"
+                                       name="magasin"
+                                    value="@ViewBag.Magasin"
+                                >
                             </div>
                         </td>
                     </tr>
@@ -89,8 +106,8 @@
 </section>
 
 <!-- /.content -->
-<script src="~/js/chart/Pie.js"></script>
+<script src="~/js/chart/PieFiltre.js"></script>
 
 <script>
-    pieChart('/Analyse/DataAnalyseMagasin')
+    pieChart('/Analyse/DataAnalyseMagasinFiltre', '@ViewBag.Date1', '@ViewBag.Date2', '@ViewBag.Magasin')
 </script>

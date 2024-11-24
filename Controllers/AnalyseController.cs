@@ -13,28 +13,6 @@ namespace Template.Controllers
             _context = context;
         }
 
-        //[HttpGet]
-        //public IActionResult DataAnalyseMagasin()
-        //{
-        //    List<VAnalyseCaMagasin> ca = _context.VAnalyseCaMagasins.ToList();
-
-        //    // Fonction pour générer une couleur aléatoire
-        //    string GenerateRandomColor()
-        //    {
-        //        Random random = new Random();
-        //        return $"#{random.Next(0x1000000):X6}"; // Génère une couleur hexadécimale
-        //    }
-
-        //    // Transformation des données avec couleurs aléatoires
-        //    var data = ca.Select(m => new
-        //    {
-        //        label = m.Nom,
-        //        value = m.Total,
-        //        color = GenerateRandomColor()
-        //    }).ToList();
-        //    return Json(data);
-        //}
-
         [HttpGet]
         public IActionResult DataAnalyseMagasin()
         {
@@ -52,10 +30,35 @@ namespace Template.Controllers
             return Json(data);
         }
 
-
-
-        public IActionResult AnalyseMagasin()
+        [HttpGet]
+        public IActionResult DataAnalyseMagasinFiltre(string? startDate, string? endDate, string? magasin)
         {
+
+            DateOnly start = startDate != null ? DateOnly.Parse(startDate) : DateOnly.MinValue;
+            DateOnly end = endDate != null ? DateOnly.Parse(endDate) : DateOnly.MaxValue;
+            string mag = magasin != null ? magasin : "";
+
+            var data = _context.VFactureComplets
+             .Where(m => m.DateF >= start && m.DateF <= end && m.MNom.Contains(mag))
+             .GroupBy(m => m.MNom)
+             .Select(g => new
+             {
+                 label = g.Key,
+                 value = g.Sum(m => m.TotalFacture),
+                 color = $"#{new Random().Next(0x1000000):X6}"
+             })
+             .ToList();
+
+            return Json(data);
+        }
+
+        public IActionResult AnalyseMagasin(string? date1 = "", string? date2 = "", string? magasin = "")
+        {
+
+            ViewBag.Date1 = string.IsNullOrEmpty(date1) ? "" : date1;
+            ViewBag.Date2 = string.IsNullOrEmpty(date2) ? "" : date2;
+            ViewBag.Magasin = string.IsNullOrEmpty(magasin) ? "" : magasin;
+
             return View("Chart");
         }
 

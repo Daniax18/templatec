@@ -19,6 +19,9 @@ namespace Template.Controllers
         {
             ViewBag.Unities = new SelectList(_context.Unites, "Id", "Nom");
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Nom");
+            Console.WriteLine("I am here");
+            _logger.LogInformation("Fetching data for Index view...");
+
             return View();
         }
 
