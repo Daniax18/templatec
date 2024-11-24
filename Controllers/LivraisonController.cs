@@ -7,7 +7,7 @@ using Template.Models.livraison;
 
 namespace Template.Controllers
 {
-    public class LivraisonController : Controller
+    public class LivraisonController : BaseController
     {
 
         private readonly StoreContext _storeContext;

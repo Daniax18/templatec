@@ -7,7 +7,7 @@ using Template.Models.invoice;
 
 namespace Template.Controllers
 {
-    public class FactureController : Controller
+    public class FactureController : BaseController
     {
 
         private readonly StoreContext _storeContext;

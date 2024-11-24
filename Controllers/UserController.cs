@@ -53,7 +53,7 @@ namespace Template.Controllers
                         HttpContext.Session.SetString("UserRef", check_user.Refuser.ToString());
                         HttpContext.Session.SetString("UserId", check_user.Id.ToString());
                         HttpContext.Session.SetString("UserRole", user_role.Rang.ToString());
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Acceuil", "Home");
                     }
                     else
                     {

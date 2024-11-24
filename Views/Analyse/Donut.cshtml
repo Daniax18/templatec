@@ -3,7 +3,7 @@
 *@
 @{
 }@{
-    ViewBag.Title = "Flowers";
+    ViewBag.Title = "Analyse";
     Layout = "~/Views/Shared/_Layout.cshtml"; // Indique d'utiliser le layout
 }
 
@@ -11,7 +11,7 @@
 <section class="content-header">
     <h1>
         Analyse
-        <small>Chiffre d'affaire</small>
+        <small>Vente par catégorie</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Analyse de vente</a></li>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="box-body ">
-            <form action="@Url.Action("Exporter", "Facture")" method="post">
+            <form action="@Url.Action("AnalyseCategorie", "Analyse")" method="GET">
                 <table class="table table-bordered">
                     <tr>
                         <td>
@@ -44,8 +44,8 @@
                                     type="text" 
                                     class="form-control" 
                                     id="exampleInputEmail1"
-                                    name="dateMin"
-                                >
+                                    name="date1"
+                                       value="@ViewBag.Date1">
                             </div>
                         </td>
                         <td>
@@ -55,20 +55,25 @@
                                     type="text" 
                                     class="form-control" 
                                     id="exampleInputEmail1"
-                                    name="dateMax"
-                                >
+                                    name="date2"
+                                       value="@ViewBag.Date2">
                             </div>
                         </td>
                         <td>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Magasin</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1">
+                                <label for="exampleInputEmail1">Categorie</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="exampleInputEmail1"
+                                    name="categorie"
+                                       value="@ViewBag.Categorie">
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <button type="button" id="searchButton" class="btn btn-info">
+                            <button type="submit" id="searchButton" class="btn btn-info">
                                 Recherher
                             </button>
                         </td>
@@ -102,8 +107,8 @@
 
 
 <!-- /.content -->
-<script src="~/js/chart/Bar.js"></script>
+<script src="~/js/chart/BarFiltre.js"></script>
 
 <script>
-    BarChart('/Analyse/DataAnalyseCategorie')
+    BarChart('/Analyse/DataAnalyseCategorie', '@ViewBag.Date1', '@ViewBag.Date2', '@ViewBag.Categorie')
 </script>

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Template.Models;
-using Template.Models.analyse;
 
 namespace Template.Controllers
 {
-    public class AnalyseController : Controller
+    public class AnalyseController : BaseController
     {
         private readonly StoreContext _context;
 
@@ -13,22 +12,6 @@ namespace Template.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult DataAnalyseMagasin()
-        {
-            // Requête LINQ pour obtenir les données groupées par "Nom" avec la somme des "Total"
-            var data = _context.VFactureComplets
-             .GroupBy(m => m.MNom) // Grouper par le nom du magasin (MNom)
-             .Select(g => new
-             {
-                 label = g.Key, // Clé du groupe (Nom du magasin)
-                 value = g.Sum(m => m.TotalFacture), // Somme des valeurs "TotalFacture" dans le groupe
-                 color = $"#{new Random().Next(0x1000000):X6}" // Génère une couleur aléatoire
-             })
-             .ToList();
-
-            return Json(data);
-        }
 
         [HttpGet]
         public IActionResult DataAnalyseMagasinFiltre(string? startDate, string? endDate, string? magasin)
@@ -62,35 +45,52 @@ namespace Template.Controllers
             return View("Chart");
         }
 
-        public IActionResult AnalyseCategorie()
+        public IActionResult AnalyseCategorie(string? date1 = "", string? date2 = "", string? categorie = "")
         {
+            ViewBag.Date1 = string.IsNullOrEmpty(date1) ? null : date1;
+            ViewBag.Date2 = string.IsNullOrEmpty(date2) ? null : date2;
+            ViewBag.Categorie = string.IsNullOrEmpty(categorie) ? null : categorie;
             return View("Donut");
         }
 
         [HttpGet]
-        public IActionResult DataAnalyseCategorie()
+        public IActionResult DataAnalyseCategorie(string? startDate, string? endDate, string? categorie)
         {
-            List<VAnalyseCategorie> cat = _context.VAnalyseCategories.ToList();
+            DateOnly start = startDate != null ? DateOnly.Parse(startDate) : DateOnly.MinValue;
+            DateOnly end = endDate != null ? DateOnly.Parse(endDate) : DateOnly.MaxValue;
+            string cat = categorie != null ? categorie : "";
 
+            var data = _context.VDetailFactureComplets
+             .Where(m => m.DateF >= start && m.DateF <= end && m.Catnom.Contains(cat))
+             .GroupBy(m => m.Catnom)
+             .Select(g => new
+             {
+                 MNom = g.Key, // Nom du magasin (clé du groupe)
+                 Total = g.Sum(m => m.Qte), // Somme des ventes
+                 Color = $"#{new Random().Next(0x1000000):X6}" // Couleur aléatoire
+             })
+             .ToList();
 
             // Transformez les données en un objet JSON compatible avec Chart.js
             var chartData = new
             {
-                labels = cat.Select(d => d.Nom).ToList(), // Liste des noms
+                labels = data.Select(d => d.MNom).ToList(), // Liste des noms des magasins
                 datasets = new[]
                 {
                     new
                     {
-                        data = cat.Select(d => d.Total).ToList(), // Liste des totaux
+                        data = data.Select(d => d.Total).ToList(), // Liste des totaux des factures
                         fillColor= "rgba(54, 162, 235, 0.6)",
                         strokeColor= "rgba(210, 214, 222, 1)",
                         pointColor= "rgba(210, 214, 222, 1)",
                         pointStrokeColor= "#c1c7d1",
                         pointHighlightFill= "#fff",
-                        pointHighlightStroke= "rgba(220,220,220,1)"
+                        pointHighlightStroke= "rgba(220,220,220,1)",
+                        borderWidth = 1 // Largeur des bordures
                     }
                 }
             };
+
             return Json(chartData);
         }
     }

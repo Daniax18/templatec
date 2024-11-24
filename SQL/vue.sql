@@ -40,10 +40,14 @@ CREATE VIEW v_detail_facture_complet
 AS
 select
 	d.*,
+	f.date_f,
 	vp.nom,
-	vp.unite_nom
+	vp.unite_nom,
+	c.nom as catnom
 from detailfacture as d
-join v_produit_complet vp on vp.id = d.idproduit;
+join v_produit_complet vp on vp.id = d.idproduit
+join facture f on f.id = d.idfacture
+join categorie c on c.id = vp.idcategorie
 
 
 -- -----------------------------------------------------------------

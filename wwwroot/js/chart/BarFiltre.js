@@ -1,10 +1,10 @@
-﻿function BarChart(url, date1, date2) {
+﻿function BarChart(url, date1, date2, categorie) {
     $(document).ready(function () {
         // Requête AJAX pour obtenir les données
         $.ajax({
             url: url,
             type: 'GET',
-            data: { startDate: date1, endDate: date2 },
+            data: { startDate: date1, endDate: date2 , categorie : categorie},
             success: function (response) {
                 // Initialisez le graphique en utilisant les données reçues
                 var barChartCanvas = $("#barChart").get(0).getContext("2d");

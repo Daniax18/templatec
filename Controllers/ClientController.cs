@@ -3,7 +3,7 @@ using Template.Models;
 
 namespace Template.Controllers
 {
-    public class ClientController : Controller
+    public class ClientController : BaseController
     {
 
         private readonly StoreContext storeContext;

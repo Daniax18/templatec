@@ -1,4 +1,17 @@
-﻿  <!-- Left side column. contains the logo and sidebar -->
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    string? role = ViewContext.HttpContext.Session.GetString("UserRole");
+    int rang = 1;
+    if(role != null)
+    {
+        rang = int.Parse(role);
+    }
+
+    string nameRole = rang > 1 ? "ADMIN" : "SIMPLE";
+
+}
+
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -6,11 +19,11 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li class="header">MAIN NAVIGATION</li>
+            <li class="header text-center">MENU @nameRole</li>
             <!-- VENTE -->
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-shopping-cart"></i> <span>Vente</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-credit-card"></i> <span>Vente</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li class="active">
@@ -26,29 +39,30 @@
                 </ul>
             </li>
 
-            <!-- Produit -->
+            <!-- Achat -->
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-hdd-o"></i> <span>Produit</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-shopping-cart"></i> <span>Achat</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li class="active">
-                        <a href="@Url.Action("Index", "Home")">
-                            <i class="fa fa-circle-o"></i> Saisie
+                        <a href="@Url.Action("Index", "Facture")">
+                            <i class="fa fa-circle-o"></i> Saisie Achat
                         </a>
                     </li>
                     <li>
-                        <a href="@Url.Action("Index", "Livraison")">
-                            <i class="fa fa-circle-o"></i> Liste
+                        <a href="@Url.Action("ListeFacture", "Facture")">
+                            <i class="fa fa-circle-o"></i> Liste Achat
                         </a>
                     </li>
                 </ul>
             </li>
 
+
             <!-- Livraison -->
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-hdd-o"></i> <span>Livraison</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-truck"></i> <span>Livraison</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li class="active">
@@ -64,32 +78,132 @@
                 </ul>
             </li>
 
-            <!-- Caisse -->
-            <li class="treeview">
-                <a href="@Url.Action("Graph", "Home")">
-                    <i class="fa fa-bank"></i>
-                    <span>Caisse</span>
-                </a>
-            </li>
-
-            <!-- GRAPHE -->
+            <!-- Produit -->
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-pie-chart"></i> <span>Analyse</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-plus-square"></i> <span>Produit</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li class="active">
-                        <a href="@Url.Action("AnalyseMagasin", "Analyse")">
-                            <i class="fa fa-circle-o"></i> Magasin
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-circle-o"></i> Saisie
                         </a>
                     </li>
                     <li>
-                        <a href="@Url.Action("AnalyseCategorie", "Analyse")">
-                            <i class="fa fa-circle-o"></i> Categorie
+                        <a href="@Url.Action("Index", "Livraison")">
+                            <i class="fa fa-circle-o"></i> Liste
                         </a>
                     </li>
                 </ul>
             </li>
+
+            <!-- MAGASIN -->
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-home"></i> <span>Magasin</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-circle-o"></i> Saisie
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Livraison")">
+                            <i class="fa fa-circle-o"></i> Liste
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Categorie -->
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-tag"></i> <span>Categorie</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-circle-o"></i> Saisie
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Livraison")">
+                            <i class="fa fa-circle-o"></i> Liste
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Client -->
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i> <span>Client</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active">
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="fa fa-circle-o"></i> Saisie
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Livraison")">
+                            <i class="fa fa-circle-o"></i> Liste
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            @if(rang > 1)
+            {
+                <!-- STOCK -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-hdd-o"></i> <span>Stock</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <a href="@Url.Action("Index", "Livraison")">
+                                <i class="fa fa-circle-o"></i> Saisie
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="@Url.Action("ListeLivraison", "Livraison")">
+                                <i class="fa fa-circle-o"></i> Liste
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Caisse -->
+                <li class="treeview">
+                    <a href="@Url.Action("Graph", "Home")">
+                        <i class="fa fa-bank"></i>
+                        <span>Caisse</span>
+                    </a>
+                </li>
+
+                <!-- ANALYSE -->
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-pie-chart"></i> <span>Analyse Vente</span> <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="active">
+                            <a href="@Url.Action("AnalyseMagasin", "Analyse")">
+                                <i class="fa fa-circle-o"></i> Par Magasin
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("AnalyseCategorie", "Analyse")">
+                                <i class="fa fa-circle-o"></i> Par Categorie
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+
+
         </ul>
     </section>
     <!-- /.sidebar -->

@@ -629,6 +629,7 @@ public partial class StoreContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("idfacture");
+            entity.Property(e => e.DateF).HasColumnName("date_f");
             entity.Property(e => e.Idproduit)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -648,6 +649,10 @@ public partial class StoreContext : DbContext
                 .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("unite_nom");
+            entity.Property(e => e.Catnom)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("catnom");
         });
 
         modelBuilder.Entity<VFactureComplet>(entity =>

@@ -5,7 +5,7 @@ SELECT
     utilisateur.refuser,
     utilisateur.nomuser,
     utilisateur.pwduser,
-    utilisateur_magasin.id AS magasin_id
+    utilisateur_magasin.idmagasin AS magasin_id
 FROM utilisateur_magasin
 JOIN utilisateur ON utilisateur_magasin.idutilisateur = utilisateur.id
 WHERE utilisateur_magasin.datefin IS NULL;

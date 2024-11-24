@@ -5,7 +5,7 @@ using Template.Models;
 
 namespace Template.Controllers
 {
-    public class FournisseurController : Controller
+    public class FournisseurController : BaseController
     {
 
         private readonly StoreContext _storeContext;

@@ -10,7 +10,7 @@ using Template.Utils;
 
 namespace Template.Controllers
 {
-    public class ProduitController : Controller
+    public class ProduitController : BaseController
     {
         private readonly StoreContext _storeContext;
 
