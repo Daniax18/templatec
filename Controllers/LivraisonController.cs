@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Template.Models;
 using Template.Models.livraison;
+using Template.Utils;
 
 namespace Template.Controllers
 {
@@ -87,9 +88,10 @@ namespace Template.Controllers
             string idmagasin = Request.Form["idmagasin"];
             string idfrn = Request.Form["idfrn"];
 
+            var nextSequenceValue = Utilities.GetNextSequenceAsync("LivraisonSequence", _storeContext);
             var livraison = new Livraison
             {
-                Id = id,
+                Id = $"LIV{nextSequenceValue}",
                 Date = DateOnly.Parse(date),
                 Idmagasin = idmagasin,
                 Idboncommande = idbc,
@@ -119,16 +121,16 @@ namespace Template.Controllers
         {
 
             // Mere
-            string id = Request.Form["id"];
             string idbc = Request.Form["idbc"];
             string date = Request.Form["date"];
             string idmagasin = Request.Form["idmagasin"];
             string idfrn = Request.Form["idfrn"];
             int nbrLigne = int.Parse(Request.Form["nbr_ligne"]);
+            var nextSequenceValue = Utilities.GetNextSequenceAsync("LivraisonSequence", _storeContext);
 
             var livraison = new Livraison
             {
-                Id = id,
+                Id = $"LIV{nextSequenceValue}",
                 Date = DateOnly.Parse(date),
                 Idmagasin = idmagasin,
                 Idboncommande = idbc,
@@ -143,7 +145,7 @@ namespace Template.Controllers
                     decimal qty = decimal.Parse(Request.Form[$"qty_{i}"]);
                     string idproduit = Request.Form[$"idproduit_{i}"];
 
-                    filles.Add(new Detaillivraison(livraison.Id, $"dl_{i}", idproduit, qty, _storeContext));
+                    filles.Add(new Detaillivraison(livraison.Id, $"dl_{livraison.Id}_{i}", idproduit, qty, _storeContext));
                 }
             }
 

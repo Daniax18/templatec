@@ -1,5 +1,4 @@
 ﻿#pragma warning disable 
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -25,17 +24,21 @@ namespace Template.Controllers
             // Récupérer les données depuis Request.Form
             string? designation = Request.Form["designation"];
             string? description = Request.Form["description"];
-            decimal? prixDeVente = decimal.Parse(Request.Form["pu"]);
+            decimal? pu = decimal.Parse(Request.Form["pu"]);
             string? idUnite = Request.Form["idunite"];
             string? idCategorie = Request.Form["idcategorie"];
 
+            var nextSequenceValue = Utilities.GetNextSequenceAsync("ProduitSequence", _storeContext);
+
+
             Produit produit = new Produit
             {
-                Id = designation,
-                Nom = description,
+                Id = $"PROD{nextSequenceValue}",
+                Nom = designation,
                 Idcategorie = idCategorie,
                 Idunite = idUnite,
-                Pv = prixDeVente,
+                Pv = pu * 3,
+                Pu = pu
             };
 
             string[] extracted = Utilities.ExtractEntityProperties(produit);

@@ -1,9 +1,12 @@
 ﻿#pragma warning disable 
 
+using iText.Commons.Actions.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Template.Models;
 using Template.Models.invoice;
+using Template.Utils;
 
 namespace Template.Controllers
 {
@@ -86,12 +89,15 @@ namespace Template.Controllers
             string idclient = Request.Form["idclient"];
             int nbrLigne = int.Parse(Request.Form["nbr_ligne"]);
             string remarque = Request.Form["remarque"];
-            Random random = new Random();
-            int randomNumber = random.Next(1, 1000);
+            // Récupérer la prochaine valeur de la séquence depuis la base de données
+            var nextSequenceValue = Utilities.GetNextSequenceAsync("FactureSequence", _storeContext);
+
+            // Construire l'ID de la facture en utilisant la séquence
+            string factureId = $"F{nextSequenceValue}";
 
             var facture = new Facture
             {
-                Id = $"F{randomNumber}",
+                Id = factureId,
                 DateF = DateOnly.Parse(date),
                 Idmagasin = idmagasin,
                 Idclient = idclient,

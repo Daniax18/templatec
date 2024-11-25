@@ -17,13 +17,21 @@
                 </h2>
             </div>
 
+            <!-- Affichage des messages d'erreur -->
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
             <form action="@Url.Action("Login", "User")" method="post">
                 <div class="form-group has-feedback">
                     <input 
                         type="text" 
-                        name="refuser"
+                        name="nom"
                         class="form-control" 
-                        placeholder="Refuser"
+                        placeholder="Nom"
                     >
                     <i class="fa fa-fw fa-user form-control-feedback"></i>
 
@@ -33,7 +41,7 @@
                         type="password" 
                         class="form-control"
                         name="pwduser"
-                        placeholder="Password"
+                        placeholder="Mot de passe"
                     >
                     <i class="fa fa-fw fa-lock  form-control-feedback"></i>
                 </div>
@@ -67,14 +75,5 @@
         <!-- /.login-box-body -->
     </div>
     @Html.Partial("_LinkJs")
-    <script>
-        $(function () {
-          $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%' // optional
-          });
-        });
-    </script>
 </body>
 </html>

@@ -20,7 +20,7 @@ namespace Template.Controllers
             ViewBag.Unities = new SelectList(_context.Unites, "Id", "Nom");
             ViewBag.Categories = new SelectList(_context.Categories, "Id", "Nom");
 
-            return View();
+            return View("SaisieProduit");
         }
 
         public IActionResult Acceuil()

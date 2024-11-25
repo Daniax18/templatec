@@ -47,12 +47,19 @@ CREATE TABLE categorie (
 );
 
 INSERT INTO categorie (id, nom)
-VALUES ('CAT1', 'Antibiotique'),
-        ('CAT3', 'Anti-inflammatoire'),
-       ('CAT2', 'Antalgique');
+VALUES ('CAT1', 'Antibiotiques'),
+        ('CAT3', 'Anti-inflammatoires'),
+       ('CAT2', 'Antihistaminiques');
+
+       INSERT INTO categorie (id, nom)
+VALUES ('CAT4', 'Antihypertenseurs'),
+        ('CAT5', 'Antidépresseurs');
 
 -- -------------------------------------------------------------------------------------------------
-
+CREATE SEQUENCE ProduitSequence
+START WITH 29  -- Commence à 29
+INCREMENT BY 1 -- Incrémente de 1
+NO CYCLE;      -- La séquence ne recommence pas à zéro
 -- Création de la table produit
 CREATE TABLE produit (
     id VARCHAR(50) PRIMARY KEY,
@@ -66,8 +73,14 @@ CREATE TABLE produit (
 );
 
 INSERT INTO produit (id, nom, idunite, idcategorie, pu, pv)
-VALUES ('PROD1', 'PARACETAMOL', 'UNIT2', 'CAT1', 10.5, 12.00),
-       ('PROD2', 'VOLTINAX', 'UNIT1', 'CAT3', 10, 15);
+VALUES ('PROD1', 'Amoxicilline', 'UNIT2', 'CAT1', 10.5, 12.00),
+       ('PROD2', 'Ciprofloxacine ', 'UNIT1', 'CAT1', 10, 15),
+        ('PROD3', 'Ibuprofène', 'UNIT2', 'CAT2', 3, 12.00),
+       ('PROD4', 'Aspirine', 'UNIT1', 'CAT2', 5, 9),
+        ('PROD5', 'Loratadine', 'UNIT2', 'CAT3', 1, 5.00),
+       ('PROD6', 'Lisinopril', 'UNIT1', 'CAT4', 6, 11),
+        ('PROD7', 'Fluoxétine ', 'UNIT2', 'CAT5', 10, 25.00),
+       ('PROD8', 'Sertraline', 'UNIT1', 'CAT5', 16, 22);
 
 -- -------------------------------------------------------------------------------------------------
 -- Création de la table boncommande
@@ -89,10 +102,18 @@ CREATE TABLE fournisseur (
 
 INSERT INTO fournisseur (id, nom)
 VALUES ('FR1', 'Floreal'),
-       ('FR2', 'HOMEOPHARMA');
+        ('FR2', 'NCTP'),
+        ('FR3', 'Medical Maison'),
+        ('FR4', 'UPSA SA'),
+       ('FR5', 'HOMEOPHARMA');
 
 -- -------------------------------------------------------------------------------------------------
--- Création de la table livraiso
+-- Création de la table livraison
+CREATE SEQUENCE LivraisonSequence
+START WITH 28  -- Commence à 28
+INCREMENT BY 1 -- Incrémente de 1
+NO CYCLE;      -- La séquence ne recommence pas à zéro
+
 CREATE TABLE livraison (
     id VARCHAR(50) PRIMARY KEY,
     date DATE,
@@ -133,12 +154,23 @@ CREATE TABLE client (
 );
 
 INSERT INTO client (id, nom, email, contact) VALUES
-('1', 'Alice Dupont', 'alice.dupont@example.com', '0612345678'),
-('2', 'Jean Martin', 'jean.martin@example.com', '0623456789'),
-('3', 'Marie Durand', 'marie.durand@example.com', '0634567890');
+('1', 'LOMAC', 'alice.dupont@example.com', '0612345678'),
+('2', 'Central Pharma', 'jean.martin@example.com', '0623456789'),
+('3', 'Pharma Ambodistiry', 'marie.durand@example.com', '0634567890'),
+('4', 'HealthCorp', 'sophie.legrand@example.com', '0619876543'),
+('5', 'MediTech', 'lucas.moreau@example.com', '0628765432'),
+('6', 'GreenCare', 'emma.bernard@example.com', '0637654321'),
+('7', 'BioPharm', 'julien.robert@example.com', '0641236789'),
+('8', 'CareLife', 'claire.perez@example.com', '0652347890'),
+('9', 'PharmaSafe', 'paul.garcia@example.com', '0663458901');
 
 
 -- ----------------------------------------------------------------------------------------------
+CREATE SEQUENCE FactureSequence
+START WITH 60  -- Commence à 60
+INCREMENT BY 1 -- Incrémente de 1
+NO CYCLE;      -- La séquence ne recommence pas à zéro
+
 CREATE TABLE facture(
     id varchar(50) PRIMARY KEY,
     date_f DATE,

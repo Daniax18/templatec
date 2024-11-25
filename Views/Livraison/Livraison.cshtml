@@ -24,20 +24,18 @@
         <form action="@Url.Action("CreateMultipleLivraison", "Livraison")" method="POST">
             <div class="box-body">
                 <table class="table table-bordered">
-                    <!-- Remarque -->
+                    <!-- Date -->
                     <tr>
                         <td>
                             <label for="exampleInputEmail1">
-                                Remarque
+                                Date
                             </label>
                         </td>
                         <td>
-                            <input 
-                                type="text" 
-                                class="form-control" 
-                                id="exampleInputEmail1"
-                                name="id"
-                            >
+                            <input type="date"
+                                   class="form-control"
+                                   id="exampleInputEmail1"
+                                   name="date">
                         </td>
                     </tr>
 
@@ -60,23 +58,6 @@
                         </td>
                     </tr>
 
-                    <!-- Date -->
-                    <tr>
-                        <td>
-                            <label for="exampleInputEmail1">
-                                Date
-                            </label>
-                        </td>
-                        <td>
-                            <input 
-                                type="date" 
-                                class="form-control" 
-                                id="exampleInputEmail1" 
-                                name="date"
-                            >
-                        </td>
-                    </tr>
-
                     <!-- Magasin -->
                     <tr>
 
@@ -90,7 +71,6 @@
                                      new { @class = "form-control" }
                                      )
                         </td>
-
                     </tr>
 
                     <!-- Autocomplete fournisseur -->
@@ -114,6 +94,20 @@
                             <ul id="suggestions"
                                 class="list-group"
                                 style="position: absolute; z-index: 1000; width: 50%"></ul>
+                        </td>
+                    </tr>
+                    <!-- Remarque -->
+                    <tr>
+                        <td>
+                            <label for="exampleInputEmail1">
+                                Remarque
+                            </label>
+                        </td>
+                        <td>
+                            <input type="text"
+                                   class="form-control"
+                                   id="exampleInputEmail1"
+                                   name="id">
                         </td>
                     </tr>
                 </table>

@@ -25,14 +25,14 @@ namespace Template.Controllers
         [HttpPost]
         public IActionResult Login()
         {
-            string? refuser = Request.Form["refuser"];
+            string? nomUser = Request.Form["nom"];
             string? pwd = Request.Form["pwduser"];
             string? magasin = Request.Form["idmagasin"];
 
-            if (!string.IsNullOrEmpty(refuser) && !string.IsNullOrEmpty(pwd))
+            if (!string.IsNullOrEmpty(nomUser) && !string.IsNullOrEmpty(pwd))
             {
                 var user_role = _context.VUtilisateurRoles
-                    .FirstOrDefault(u => u.Refuser == int.Parse(refuser));
+                    .FirstOrDefault(u => u.Nomuser == nomUser);
 
                 if (user_role != null)
                 {
@@ -40,12 +40,12 @@ namespace Template.Controllers
                     if (user_role.Rang > 1)
                     {
                         check_user = _context.VUtilisateurMagasinLibs
-                            .FirstOrDefault(u => u.Refuser == int.Parse(refuser) && u.Pwduser == pwd);
+                            .FirstOrDefault(u => u.Nomuser == nomUser && u.Pwduser == pwd);
                     }
                     else
                     {
                         check_user = _context.VUtilisateurMagasinLibs
-                           .FirstOrDefault(u => u.Refuser == int.Parse(refuser) && u.Pwduser == pwd && u.MagasinId == magasin);
+                           .FirstOrDefault(u => u.Nomuser == nomUser && u.Pwduser == pwd && u.MagasinId == magasin);
                     }
                     if (check_user != null)
                     {
@@ -57,10 +57,13 @@ namespace Template.Controllers
                     }
                     else
                     {
+                        // Message d'erreur : Identifiants invalides
+                        TempData["ErrorMessage"] = "User, mot de passe ou magasin invalide.";
                         return RedirectToAction("Index", "User");
                     }
                 }
             }
+            TempData["ErrorMessage"] = "User, mot de passe ou magasin invalide.";
             return RedirectToAction("Index", "User");
         }
 

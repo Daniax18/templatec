@@ -1,12 +1,30 @@
 ﻿#pragma warning disable 
 
 
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Template.Models;
 
 namespace Template.Utils
 {
     public class Utilities
     {
+
+        public static int GetNextSequenceAsync(string nameSequence, StoreContext context)
+        {
+            var connection = context.Database.GetDbConnection();
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT NEXT VALUE FOR {nameSequence}";
+                var result = command.ExecuteScalar();
+                var nextSequenceValue = Convert.ToInt32(result);
+                return nextSequenceValue;
+            }
+        }
+
+
         public static string[] ExtractEntityProperties<T>(T entity)
         {
             if (entity == null)
